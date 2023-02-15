@@ -1,13 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT - in right click menu",
-  "description": "select content & right click using ChatGPT everywhere",
+  "name": "ChatGPT - just right click!",
+  "description": "Quick access ChatGPT,select content & right click using ChatGPT everywhere",
   "version": "1.0",
   "host_permissions": [
-    "https://*.openai.com/",
-    "*://*.zyinfo.pro/",
-    "*://*.stylee.top/",
-    "*://*.hayoou.com/"
+    "https://api.openai.com/*"
   ],
   "icons": {
     "16": "images/icon-16.png",
@@ -22,19 +19,9 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  "content_scripts": [
-    {
-      "js": ["prompts.js"],
-      "matches": [
-        "*://*/"
-      ]
-    }
-  ],
   "permissions": [
     "contextMenus",
-    "tabs",
     "storage"
   ],
-  "author": "telfordpan@gmail.com",
-  "update_url": "https://path/to/updateInfo.xml"
+  "author": "telfordpan@gmail.com"
 }

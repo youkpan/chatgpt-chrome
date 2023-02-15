@@ -4,8 +4,8 @@ var apikey = ""
 
 function clear() {
     query = init_query
-    $("#prompts")[0].innerHTML = current_select + "\nQ:" + query;
-    $('#output').text("");
+    $("#prompts")[0].value = current_select + "\nQ:" + query;
+    $("#output")[0].value = ""
 }
 
 function get_result() {
