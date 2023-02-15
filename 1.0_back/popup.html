@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ChatGPT - do more tasks</title>
+    <script src="./jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./weui.min.css">
+    <link rel="stylesheet" href="./pico.min.css">
+    <!--script src="./layer185.min.js"></script>
+  <script src="./layer.js"></script-->
+    <style>
+        /*  body {
+            min-width: 300px;
+            font-size: 17px;
+        }*/
+        select {
+            height: 40px;
+            padding: 5px !important;
+            /* margin: -10px; */
+            font-size: 17px;
+        }
+
+        input {
+            margin: 5px;
+            outline: none;
+        }
+
+        .min {
+            margin-top: 2px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="width:95%;left:3%;">
+        <div style="width:95%;left:3%;text-align: center;">
+            <h3 style="margin-bottom: 10px;">Process using ChatGPT</h3>
+        </div>
+        Do task:<br>
+        <select name="" id="taskselect">
+        </select><br>
+        OpenAI <a href="https://openai.com/api/login">apikey</a>:<br>
+        <input id="apikey" type="password" style="width:95%;left:3%;height:20px" />
+        <br>
+        Prompts:<br>
+        <textarea id="prompts" class="min" style="width:95%;left:3%;height:250px"></textarea>
+        <div class="min" style="width:95%;left:3%;text-align: center;margin: -20px;">
+            <button id="submit" class="min weui-btn weui-btn_mini weui-btn_default">Submit</button>&nbsp;
+            <button  id="clear"  class="min weui-btn weui-btn_mini weui-btn_default">Clear</button>&nbsp;
+            <br>
+        </div>
+        Output:
+        <textarea id="output" style="width:95%;left:3%;height:150px"></textarea>
+
+        <br>
+        
+        <div style="width:95%;left:3%;text-align: center;">
+            Powered by <a href="http://zyinfo.pro">zyinfo.pro</a></div>
+        <br><br>
+    </div>
+    <script src="./prompts.js"></script>
+    <script src="./openChatGPT.js"></script>
+    <script src="./jquery.cookie.min.js"></script>
+
+</body>
+
+</html>

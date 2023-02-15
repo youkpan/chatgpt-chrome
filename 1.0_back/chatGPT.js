@@ -20,7 +20,7 @@ url = '';
 
 targetWindow = null;
 
-layerpath = chrome.extension.getURL("/layer");
+//layerpath = chrome.extension.getURL("/layer");
 //alert(layerpath);
 //window.open(layerpath+"/skin/default/xubox_ico0.png");
 summary_init = Array();
@@ -34,11 +34,11 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     chrome.tabs.executeScript(tabId, {
       file: "jquery.min.js"//
     });
-
+/*
     chrome.tabs.executeScript(tabId, {
       code: "layerpath ='" + layerpath + "';"// tab.url
     });
-
+*/
     chrome.tabs.executeScript(tabId, {
       file: "layer185.min.js"//
     });
@@ -75,8 +75,6 @@ function opensummary(info, tab) {
     }
 
   })
-
-
   chrome.tabs.executeScript(tab.id, {
     file: "jquery.min.js"//
   });
@@ -111,17 +109,21 @@ function opensummary(info, tab) {
     file: "http://v.hayoou.com/src/abstract.pan.js"//("background/abstract.pan.js")//chrome.extension.getURL
   });
   */
-
-
+}
+var menutitle = "Do more with ChatGPT";
+function do_more_in_chatGPT(){
+  let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=600,height=300,left=100,top=100`;
+  window.open("popup.html",menutitle,params)
 }
 
 //var menutitle = "\u4F7F\u7528\u6709\u9053\u641C\u7D22 " + Hex2Utf8(info.selectionText);
 var menutitle2 = "Summary page using ChatGPT";
 var parent2 = chrome.contextMenus.create({ "title": menutitle2, "contexts": ["all"], "onclick": opensummary, });
 
-var menutitle = "搜索一下哈哈笑料 ";
+
 //var parent = chrome.contextMenus.create({"title": "\u4F7F\u7528\u6709\u9053\u641C\u7D22 ","contexts":["selection"],"onclick":searchonyodao,});
-var parent3 = chrome.contextMenus.create({ "title": menutitle, "contexts": ["selection"], "onclick": searchonhaha, });
+var parent3 = chrome.contextMenus.create({ "title": menutitle, "contexts": ["selection"], "onclick": do_more_in_chatGPT, });
 
 
 //localStorage["a"] = "sfsf";//设置a为"sfsf"，覆盖上面的值
