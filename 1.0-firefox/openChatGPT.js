@@ -32,7 +32,7 @@ function get_result() {
         alert("Please set API key,you can go to openai.com to get API key")
         return
     }
-    chrome.storage.sync.set({ 'apikey': apikey }, function () { });
+    browser.storage.sync.set({ 'apikey': apikey }, function () { });
     //prompt2 = prompt1 + "\nQ:" + query+"\nA:"
     $.ajax({
         type: "post",
@@ -90,7 +90,7 @@ $(function () {
     if (userLang.length > 2) {
         language = userLang.substring(0, 2)
     }
-    chrome.storage.sync.get(["current_select", "apikey","selectedIndex"]).then((result) => {
+    browser.storage.sync.get(["current_select", "apikey","selectedIndex"]).then((result) => {
         console.log(result);
         current_select = result.current_select
         $("#prompts")[0].value = current_select + "\n\nQ:" + query;
@@ -108,10 +108,10 @@ $(function () {
     $("#clear").on("click", clear)
     $("#taskselect").on('change', function () {
         selectedIndex = this.selectedIndex
-        chrome.storage.sync.set({ 'selectedIndex': selectedIndex }, function () { });
+        browser.storage.sync.set({ 'selectedIndex': selectedIndex }, function () { });
         prompt1 = this.value
         current_select = prompt1
-        chrome.storage.sync.set({ 'current_select': current_select }, function () { });
+        browser.storage.sync.set({ 'current_select': current_select }, function () { });
         $("#prompts")[0].value = prompt1 + "\n\nQ:" + query;
         prompts1 = $("#prompts")
         prompts1[0].scrollTop = prompts1[0].scrollHeight;
@@ -177,28 +177,10 @@ $(function () {
     }
     //document.body.innerHTML = query
     /*
-    chrome.runtime.onMessage.addListener(function (request) {
+    browser.runtime.onMessage.addListener(function (request) {
       if (request.type === "a_message_type") {
         console.log(request.foo); // request has the payload from the parent window
       }
     });*/
 });
 
-
-/*
-function show_window(){
-    layer.open({
-        content: "<div'>"+"</div>"
-        ,btn: ["完成"]
-        ,shadeClose:false
-        ,id: 'layer1'
-        ,zIndex:100
-        ,type:3
-        ,yes: function(index){
-            layer.close(index)
-            
-        }
-      });
-}
-show_window()
-*/
