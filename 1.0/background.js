@@ -1,7 +1,7 @@
 import { Locales } from './locales.js'
 // Add a listener to create the initial context menu items,
 // context menu items only need to be created at runtime.onInstalled
-var menutitle = "Using ChatGPT process";
+var menutitle = "使用 ChatGPT 处理内容";
 
 chrome.runtime.onInstalled.addListener(async () => {
     //for (let [tld, locale] of Object.entries(Locales)) {
