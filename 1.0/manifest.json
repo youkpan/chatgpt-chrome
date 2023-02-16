@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT - just right click!",
+  "name": "ChatGPT - Right click to use!",
   "description": "Quick access ChatGPT,select content & right click using ChatGPT everywhere",
-  "version": "1.0",
+  "version": "3.5",
   "host_permissions": [
     "https://api.openai.com/*"
   ],

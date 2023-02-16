@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     //for (let [tld, locale] of Object.entries(Locales)) {
       chrome.contextMenus.create({
         id: "",
-        title: "Do more with ChatGPT",
+        title: "Using ChatGPT process",
         type: 'normal',
         contexts: ['selection','all'],
       });
@@ -19,7 +19,7 @@ chrome.contextMenus.onClicked.addListener((item, tab) => {
   const tld = item.menuItemId
 
   var content = item.selectionText
-  var menutitle = "Do more with ChatGPT";
+  var menutitle = "Using ChatGPT process";
   var params = `scrollbars=yes,resizable=yes,status=no,location=no,toolbar=no,menubar=no,
 width=400,height=700,left=400,top=100`;
   var url ="popup.html?mquery="+encodeURIComponent(content)
