@@ -1,7 +1,8 @@
 var current_select = ""
-var outdata =""
+var outdata = ""
 var apikey = ""
 var language = "en"
+var loading = false
 function clear() {
     query = init_query
     $("#prompts")[0].value = current_select + "\nQ:" + query;
@@ -9,14 +10,26 @@ function clear() {
 }
 
 function get_result() {
-    $("#prompts")[0].innerHTML += "\nA:"
-    prompt2 = $("#prompts")[0].innerHTML
+    if (loading){
+        return
+    }
+    loading = true
+    prompt2 = $("#prompts")[0].value
+    if (prompt2.length > 3) {
+        if (prompt2.substr(-3) != "\nA:") {
+            $("#prompts")[0].value += "\nA:"
+        }
+    } else {
+        $("#prompts")[0].value += "\nA:"
+    }
+    prompt2 = $("#prompts")[0].value
+
     apikey = $("#apikey")[0].value
     if (apikey == "") {
         alert("Please set API key,you can go to openai.com to get API key")
         return
     }
-    chrome.storage.sync.set({'apikey': apikey}, function() {});
+    chrome.storage.sync.set({ 'apikey': apikey }, function () { });
     //prompt2 = prompt1 + "\nQ:" + query+"\nA:"
     $.ajax({
         type: "post",
@@ -53,54 +66,63 @@ function get_result() {
             }
             if (outdata.length > 0) {
                 //query += "\nA:" + outdata+"\n\nQ:"
-                $("#prompts")[0].innerHTML += outdata + "\n\nQ:";
+                $("#prompts")[0].value += outdata + "\n\nQ:";
                 $('#output').text(outdata);
                 prompts1 = $("#prompts")
                 prompts1[0].scrollTop = prompts1[0].scrollHeight;
+
+                $("#prompts")[0].focus()
             }
+
+            $("#submit")[0].removeAttribute("aria-busy")
+            loading = false
         } // 注意不要在此行增加逗号
     });
-
+    $("#submit")[0].setAttribute("aria-busy", "true")
 }
 $(function () {
-    var userLang = navigator.language || navigator.userLanguage; 
+    var userLang = navigator.language || navigator.userLanguage;
     //alert ("The language is: " + userLang);
-    language =userLang
-    if (userLang.length>2){
-        language = userLang.substring(0,2)
+    language = userLang
+    if (userLang.length > 2) {
+        language = userLang.substring(0, 2)
     }
-    chrome.storage.sync.get(["current_select","apikey"]).then((result) => {
-        console.log( result);
+    chrome.storage.sync.get(["current_select", "apikey"]).then((result) => {
+        console.log(result);
         current_select = result.current_select
+        $("#prompts")[0].value = current_select + "\n\nQ:" + query;
+        prompts1 = $("#prompts")
+        prompts1[0].scrollTop = prompts1[0].scrollHeight;
         apikey = result.apikey
-        $("#apikey")[0].value =apikey
+        $("#apikey")[0].value = apikey
     });
 
-    $("#prompts")[0].innerHTML = current_select
     $("#apikey")[0].value = $.cookie("apikey")
     init_page()
-    $("#submit").on("click",get_result)
-    $("#clear").on("click",clear)
+    $("#submit").on("click", get_result)
+    $("#clear").on("click", clear)
     $("#taskselect").on('change', function () {
         prompt1 = this.value
         current_select = prompt1
-        chrome.storage.sync.set({'current_select': current_select}, function() {});
-        if (language == "zh"){
+        chrome.storage.sync.set({ 'current_select': current_select }, function () { });
+        if (language == "zh") {
             pos = prompt1.indexOf("我的第一")
             if (pos == -1) {
                 pos = prompt1.indexOf("首先")
             }
             if (pos != -1) {
                 prompt1 = prompt1.substring(0, pos)
+            }else{
+                console.log("not finde first "+prompt1)
             }
-        }else{
+        } else {
             pos = prompt1.indexOf("My first ")
             if (pos != -1) {
                 prompt1 = prompt1.substring(0, pos)
             }
         }
-        
-        $("#prompts")[0].innerHTML = prompt1 + "\nQ:" + query;
+
+        $("#prompts")[0].value = prompt1 + "\nQ:" + query;
         prompts1 = $("#prompts")
         prompts1[0].scrollTop = prompts1[0].scrollHeight;
     });
@@ -108,10 +130,10 @@ $(function () {
 
 function init_page() {
     var html = ""
-    if (language == "zh"){
+    if (language == "zh") {
         prompt_data = prompt_data_cn
     }
-    
+
     for (var i = 0; i < prompt_data.length; i += 2) {
         mname = prompt_data[i]
         prompt1 = prompt_data[i + 1]
@@ -120,25 +142,25 @@ function init_page() {
     $("#taskselect")[0].innerHTML = html
 }
 
-function get_query(){
+function get_query() {
     var url = document.location.href;
     var qs = url.substring(url.indexOf('?') + 1).split('&');
-    for(var i = 0, result = {}; i < qs.length; i++){
+    for (var i = 0, result = {}; i < qs.length; i++) {
         qs[i] = qs[i].split('=');
         result[qs[i][0]] = decodeURIComponent(qs[i][1]);
     }
     return result;
 }
-var query =""
+var query = ""
 var init_query = ""
 $(function () {
     console.log(location.href)
     var data = location.href
-    data = data.substring(data.indexOf(".html?mquery=")+13 )
+    data = data.substring(data.indexOf(".html?mquery=") + 13)
     query = decodeURIComponent(data)
-    $("#prompts")[0].innerHTML = query
+    $("#prompts")[0].value = query
     init_query = query
-    
+
     //document.body.innerHTML = query
     /*
     chrome.runtime.onMessage.addListener(function (request) {
@@ -146,9 +168,9 @@ $(function () {
         console.log(request.foo); // request has the payload from the parent window
       }
     });*/
-  });
+});
 
-  
+
 /*
 function show_window(){
     layer.open({

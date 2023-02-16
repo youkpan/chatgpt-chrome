@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT - Right click to process with 150 missions!",
+  "name": "ChatGPT - Right click, process 150 missions!",
   "description": "Quick access to ChatGPT, 150 ways to handle tasks, select content and right click, you can use ChatGPT everywhere ",
-  "version": "3.6",
+  "version": "3.8",
   "host_permissions": [
     "https://api.openai.com/*"
   ],
