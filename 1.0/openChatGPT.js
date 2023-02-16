@@ -1,7 +1,7 @@
 var current_select = ""
 var outdata =""
 var apikey = ""
-
+var language = "en"
 function clear() {
     query = init_query
     $("#prompts")[0].value = current_select + "\nQ:" + query;
@@ -31,7 +31,7 @@ function get_result() {
             "temperature": 0.1,
             "top_p": 0.6,
             "n": 1,
-            "presence_penalty": 0.3,
+            "presence_penalty": 0.2,
             "frequency_penalty": 0.1,
             "stream": false,
             "logprobs": null,
@@ -63,7 +63,12 @@ function get_result() {
 
 }
 $(function () {
-    
+    var userLang = navigator.language || navigator.userLanguage; 
+    //alert ("The language is: " + userLang);
+    language =userLang
+    if (userLang.length>2){
+        language = userLang.substring(0,2)
+    }
     chrome.storage.sync.get(["current_select","apikey"]).then((result) => {
         console.log( result);
         current_select = result.current_select
@@ -80,10 +85,21 @@ $(function () {
         prompt1 = this.value
         current_select = prompt1
         chrome.storage.sync.set({'current_select': current_select}, function() {});
-        pos = prompt1.indexOf("My first ")
-        if (pos != -1) {
-            prompt1 = prompt1.substring(0, pos)
+        if (language == "zh"){
+            pos = prompt1.indexOf("我的第一")
+            if (pos == -1) {
+                pos = prompt1.indexOf("首先")
+            }
+            if (pos != -1) {
+                prompt1 = prompt1.substring(0, pos)
+            }
+        }else{
+            pos = prompt1.indexOf("My first ")
+            if (pos != -1) {
+                prompt1 = prompt1.substring(0, pos)
+            }
         }
+        
         $("#prompts")[0].innerHTML = prompt1 + "\nQ:" + query;
         prompts1 = $("#prompts")
         prompts1[0].scrollTop = prompts1[0].scrollHeight;
@@ -92,14 +108,17 @@ $(function () {
 
 function init_page() {
     var html = ""
+    if (language == "zh"){
+        prompt_data = prompt_data_cn
+    }
+    
     for (var i = 0; i < prompt_data.length; i += 2) {
-        name = prompt_data[i]
+        mname = prompt_data[i]
         prompt1 = prompt_data[i + 1]
-        html += '<option value="' + prompt1 + '">' + name + '</option>'
+        html += '<option value="' + prompt1 + '">' + mname + '</option>'
     }
     $("#taskselect")[0].innerHTML = html
 }
-
 
 function get_query(){
     var url = document.location.href;

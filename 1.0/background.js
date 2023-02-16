@@ -1,11 +1,13 @@
 import { Locales } from './locales.js'
 // Add a listener to create the initial context menu items,
 // context menu items only need to be created at runtime.onInstalled
+var menutitle = "使用 ChatGPT 处理内容";
+
 chrome.runtime.onInstalled.addListener(async () => {
     //for (let [tld, locale] of Object.entries(Locales)) {
       chrome.contextMenus.create({
         id: "",
-        title: "Using ChatGPT process",
+        title: menutitle,
         type: 'normal',
         contexts: ['selection','all'],
       });
@@ -19,7 +21,7 @@ chrome.contextMenus.onClicked.addListener((item, tab) => {
   const tld = item.menuItemId
 
   var content = item.selectionText
-  var menutitle = "Using ChatGPT process";
+  
   var params = `scrollbars=yes,resizable=yes,status=no,location=no,toolbar=no,menubar=no,
 width=400,height=700,left=400,top=100`;
   var url ="popup.html?mquery="+encodeURIComponent(content)
