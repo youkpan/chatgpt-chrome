@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT - 150种处理任务，右键快速访问",
-  "description": "快速访问 ChatGPT，150种处理任务方式，选中内容并右键单击，即可在任何地方使用 ChatGPT ",
-  "version": "3.5",
+  "name": "ChatGPT - Right click to process with 150 missions!",
+  "description": "Quick access to ChatGPT, 150 ways to handle tasks, select content and right click, you can use ChatGPT everywhere ",
+  "version": "3.6",
   "host_permissions": [
     "https://api.openai.com/*"
   ],
