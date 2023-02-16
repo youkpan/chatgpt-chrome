@@ -148,8 +148,10 @@ function init_page() {
     for (var i = 0; i < prompt_data.length; i += 2) {
         mname = prompt_data[i]
         prompt1 = prompt_data[i + 1]
-        prompt1 = filter_first(prompt1)
-        html += '<option value="' + prompt1 + '">' + mname + '</option>'
+        if (typeof(prompt1)!="undefined"){
+            prompt1 = filter_first(prompt1)
+            html += '<option value="' + prompt1 + '">' + mname + '</option>'
+        }
     }
     $("#taskselect")[0].innerHTML = html
 }
