@@ -36,29 +36,31 @@ function get_result() {
     //prompt2 = prompt1 + "\nQ:" + query+"\nA:"
     $.ajax({
         type: "post",
-        url: "https://api.openai.com/v1/completions",
+        url: "https://api.openai.com/v1/chat/completions",
         async: true, // 使用同步方式
         // 1 需要使用JSON.stringify 否则格式为 a=2&b=3&now=14...
         // 2 需要强制类型转换，否则格式为 {"a":"2","b":"3"}
         data: JSON.stringify({
-            "model": "text-davinci-003",
-            "prompt": prompt2,
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": prompt2}],
             "max_tokens": 1500,
-            "temperature": 0.1,
-            "top_p": 0.6,
+            "temperature": 0.3,
+            "top_p": 0.8,
             "n": 1,
             "presence_penalty": 0.2,
             "frequency_penalty": 0.1,
             "stream": false,
-            "logprobs": null,
-            "stop": ""
+            "stop": "\nQ:"
         }),
         contentType: "application/json; charset=utf-8",
         headers: { 'Authorization': "Bearer " + apikey },
         dataType: "json",
         success: function (data) {
             console.log(data)
-            outdata = data.choices[0].text
+            if(data.choices.length==0){
+                return
+            }
+            outdata = data.choices[0].message.content
             if (outdata.length > 2) {
                 if (outdata.substring(0, 2) == "\n\n") {
                     outdata = outdata.substring(2)

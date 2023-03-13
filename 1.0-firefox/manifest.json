@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "ChatGPT - Right click, process 150 missions!",
     "description": "Quick access to ChatGPT, 150 ways to handle tasks, select content and right click, you can use ChatGPT everywhere ",
-    "version": "1.0",
+    "version": "1.1",
     "homepage_url": "https://github.com/youkpan/chatgpt-chrome",
     "background": {
         "scripts": [
